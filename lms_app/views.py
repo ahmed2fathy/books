@@ -40,9 +40,19 @@ def index(request):
     
     
 def books(request):
+    search = Book.objects.all()
+    title=None
+    if'search_name'in request.GET:
+        title= request.GET['search_name']
+        if title:
+            search= search.filter(title__icontains= title)
+    
+    
+    
+    
     context = {
         'category': Category.objects.all(),
-        'books':Book.objects.all(),
+        'books':search,
         'formcat':CategoryForm(),
         
     }
